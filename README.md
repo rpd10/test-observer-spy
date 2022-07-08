@@ -9,7 +9,7 @@ npm i
 nx test demo
 ```
 
-## The Bug
+## The Problem
 
 See `apps/demo/src/app/test/service.spec.ts` and associated code.
 
@@ -36,3 +36,9 @@ It seems like `@hirez_io/observer-spy` does not deal with Observables that are c
 
       at src/app/test/service.spec.ts:22:32
 ```
+
+## The Solution
+
+Re-re-re-read the docs :)-< https://github.com/hirezio/observer-spy#-rxjs--promises-use-async--await
+
+We need to use async/await when dealing with Promises
