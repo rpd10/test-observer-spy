@@ -16,10 +16,11 @@ function setup() {
 
 describe('TestService', () => {
   describe('when the mocked service uses promises', () => {
-    it('works with subscribeSpyTo', () => {
+    it('works with subscribeSpyTo', async () => {
       const { service, mock } = setup();
       const spy = subscribeSpyTo(service.getUserInfo(), { expectErrors: true });
       expect(mock.getDataFromPromise).toHaveBeenCalled(); // <--- this passes and proves the observable is subscribed to
+      await spy.onComplete();
       expect(spy.receivedError()).toBe(false); // <--- this passes and proves there are no errors in the stream
       expect(spy.receivedNext()).toBe(true); // <--- this fails, which means the stream created by `from` doesn't emit any values?
       expect(spy.getLastValue()).toEqual('test');
@@ -44,9 +45,9 @@ describe('TestService', () => {
       const spy = subscribeSpyTo(service.getUserInfo2(), {
         expectErrors: true,
       });
-      expect(mock.getDataFromObservable).toHaveBeenCalled(); // <--- this passes and proves the observable is subscribed to
-      expect(spy.receivedError()).toBe(false); // <--- this passes and proves there are no errors in the stream
-      expect(spy.receivedNext()).toBe(true); // <--- this fails, which means the stream created by `from` doesn't emit any values?
+      expect(mock.getDataFromObservable).toHaveBeenCalled();
+      expect(spy.receivedError()).toBe(false);
+      expect(spy.receivedNext()).toBe(true);
       expect(spy.getLastValue()).toEqual('test');
     });
 
